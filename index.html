@@ -3,22 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>CollapseSystems</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>CollapseSystems</h1>
-        <h2>Entropy-Locked Software Security</h2>
-        <p>We develop cryptographic execution control systems that bind software access to the machine itself. Our tools run silently, offline, and without passwords or servers.</p>
-        <div class="divider"></div>
-        <h3>Products</h3>
-        <ul>
-            <li><strong>CollapseZero:</strong> Offline anti-piracy engine using entropy collapse and hardware signature sealing. Available for license.</li>
-        </ul>
-        <div class="divider"></div>
-        <h3>Contact</h3>
-        <p>Email: <a href="mailto:whisperpoint@collapsesystems.com">whisperpoint@collapsesystems.com</a></p>
-        <p>Developed by <span class="lab">WhisperPoint</span></p>
+    <div class="background">
+        <div class="glow"></div>
+        <canvas id="canvas"></canvas>
+        <div class="container">
+            <h1>CollapseSystems</h1>
+            <h2>Entropy-Locked Execution Engines</h2>
+            <p>We develop cryptographic systems that bind execution to the unpredictable terrain of your machine. No keys. No passwords. No backdoors.</p>
+            <div class="section">
+                <h3>CollapseZero</h3>
+                <p>An offline anti-piracy and access control engine that seals software to its origin. Fully autonomous. Fails silently. Unbreakable by design.</p>
+            </div>
+            <div class="section">
+                <h4>Developed by <span class="lab">WhisperPoint</span></h4>
+                <p>Contact: <a href="mailto:whisperpoint@collapsesystems.com">whisperpoint@collapsesystems.com</a></p>
+            </div>
+        </div>
     </div>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        function drawChaos() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            for (let i = 0; i < 30; i++) {
+                ctx.moveTo(Math.random()*canvas.width, Math.random()*canvas.height);
+                ctx.lineTo(Math.random()*canvas.width, Math.random()*canvas.height);
+            }
+            ctx.strokeStyle = 'rgba(0,255,255,0.03)';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+        }
+        setInterval(drawChaos, 300);
+    </script>
 </body>
 </html>
