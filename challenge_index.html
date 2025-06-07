@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script>```html
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,13 +23,13 @@
     <main>
         <section class="challenge-hero">
             <h1>Crack the Collapse</h1>
-            <p>∑ π ∞ | The cipher awaits. Download the encrypted challenge and unravel the entropy. Only the elite can break the Collapse.</p>
+            <p>∑ π ∞ | The cipher awaits. Download the encrypted challenge and unravel the entropy. Only the elite will prevail.</p>
             <a href="encrypted_challenge.zip" download class="cta">Download the Cipher</a>
         </section>
         <section class="challenge-details">
             <h2>The Enigma</h2>
-            <p>Within <code>encrypted_challenge.zip</code> lies a locked secret. Forged in chaos, bound by math. Crack the hash, decode the truth. No hints, no mercy—only the Collapse.</p>
-            <p>Post your proof to <a href="../contact/index.html">initiate protocol</a>. The worthy will be recognized.</p>
+            <p>Locked within <code>encrypted_challenge.zip</code> is a secret forged in chaos. Crack the SHA-256 hash, decode the truth. No keys, no hints—only the Collapse.</p>
+            <p>Submit your proof via <a href="../contact/index.html">protocol initiation</a>. The worthy will be etched in the ledger.</p>
         </section>
     </main>
     <footer>
@@ -77,4 +38,3 @@
     </footer>
 </body>
 </html>
-```
