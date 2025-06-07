@@ -1,81 +1,269 @@
-body, html {
+```css
+body {
     margin: 0;
     padding: 0;
-    height: 100%;
-    background: #000;
-    overflow: hidden;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #000000;
+    color: #00f7ff;
+    font-family: 'Fira Code', monospace;
+    overflow-x: hidden;
 }
 
-.background {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, #0a0f18 0%, #010409 100%);
+header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    color: #b4e7ff;
-    z-index: 1;
+    padding: 20px;
+    background: rgba(0, 247, 255, 0.15);
+    border-bottom: 2px solid #00f7ff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
-.glow {
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 0 0 20px #00f7ff;
+    animation: glitch 3s infinite;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    color: #00f7ff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: text-shadow 0.3s, transform 0.2s;
+}
+
+nav a:hover {
+    text-shadow: 0 0 25px #00f7ff;
+    transform: scale(1.1);
+}
+
+.hero, .challenge-hero {
+    text-align: center;
+    padding: 100px 20px;
+    background: linear-gradient(45deg, #000000, #001a1a);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before, .challenge-hero::before {
+    content: '∑ π ∞ 0101 1010 ∑ π';
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(0,255,255,0.1) 0%, transparent 60%);
-    z-index: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.25;
+    font-size: 4rem;
+    color: #00f7ff;
+    pointer-events: none;
+    animation: drift 12s linear infinite;
+}
+
+.hero::after, .challenge-hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,10 L90,30 L90,70 L50,90 L10,70 L10,30 Z M50,20 L80,35 L80,65 L50,80 L20,65 L20,35 Z" stroke="%2300f7ff" stroke-width="1.5" fill="none" opacity="0.2"/></svg>') repeat;
+    opacity: 0.25;
     pointer-events: none;
 }
 
-.container {
-    z-index: 2;
-    max-width: 700px;
-    padding: 2rem;
-    background-color: rgba(0, 24, 48, 0.2);
-    border: 1px solid #00c2ff44;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(0,192,255,0.2);
-    backdrop-filter: blur(6px);
+.hero h1, .challenge-hero h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5rem;
+    margin: 0;
+    text-shadow: 0 0 30px #00f7ff;
+    animation: pulse 2s infinite;
 }
 
-h1 {
-    font-size: 2.5rem;
-    color: #00c2ff;
-    margin-bottom: 0.2em;
+.hero p, .challenge-hero p {
+    font-size: 1.4rem;
+    margin: 25px 0;
 }
 
-h2 {
-    font-weight: 400;
-    font-size: 1.3rem;
-    margin-bottom: 1em;
-    color: #82d6ff;
-}
-
-h3 {
-    font-size: 1.1rem;
-    color: #b4e7ff;
-    margin-top: 1.5em;
-}
-
-h4 {
-    font-weight: 400;
-    margin-top: 2em;
-    font-size: 1rem;
-    color: #55f0ff;
-}
-
-.section {
-    margin-top: 1.5em;
-}
-
-.lab {
-    font-style: italic;
-    color: #50d8ff;
-}
-
-a {
-    color: #7eefff;
+.cta {
+    display: inline-block;
+    padding: 15px 30px;
+    background: #00f7ff;
+    color: #000000;
     text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: box-shadow 0.3s, transform 0.2s;
+}
+
+.cta:hover {
+    box-shadow: 0 0 25px #00f7ff;
+    transform: translateY(-5px);
+}
+
+.products-teaser, .challenge-teaser, .challenge-details {
+    padding: 80px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.products-teaser::after, .challenge-teaser::after, .challenge-details::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 90,30 90,70 50,90 10,70 10,30" stroke="%2300f7ff" stroke-width="1.5" fill="none" opacity="0.25"/></svg>') repeat;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.products-teaser h2, .challenge-teaser h2, .challenge-details h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    text-shadow: 0 0 20px #00f7ff;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.product-card {
+    background: rgba(0, 247, 255, 0.25);
+    padding: 30px;
+    border: 2px solid #00f7ff;
+    border-radius: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card::before {
+    content: '0101 1010';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    opacity: 0.5;
+    font-size: 1rem;
+    animation: flicker 4s infinite;
+}
+
+.product-card h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.7rem;
+    margin: 0 0 15px;
+}
+
+.product-card p {
+    font-size: 1.1rem;
+    margin: 0 0 20px;
+}
+
+.product-cta {
+    color: #00f7ff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: text-shadow 0.3s, transform 0.2s;
+}
+
+.product-cta:hover {
+    text-shadow: 0 0 20px #00f7ff;
+    transform: scale(1.05);
+}
+
+.challenge-details p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.challenge-details code {
+    background: rgba(0, 247, 255, 0.3);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    background: rgba(0, 247, 255, 0.25);
+    border-top: 2px solid #00f7ff;
+}
+
+footer a {
+    color: #00f7ff;
+    text-decoration: none;
+    transition: text-shadow 0.3s;
+}
+
+footer a:hover {
+    text-shadow: 0 0 20px #00f7ff;
+}
+
+.crypto-bg {
+    opacity: 0.35;
+    font-size: 1rem;
+    margin-top: 20px;
+    animation: drift 8s linear infinite;
+}
+
+@keyframes pulse {
+    0% { text-shadow: 0 0 10px #00f7ff; }
+    50% { text-shadow: 0 0 30px #00f7ff; }
+    100% { text-shadow: 0 0 10px #00f7ff; }
+}
+
+@keyframes glitch {
+    0% { text-shadow: 0 0 20px #00f7ff; }
+    2% { text-shadow: 2px 0 20px #ff00ff, -2px 0 20px #00ff00; }
+    4% { text-shadow: 0 0 20px #00f7ff; }
+    100% { text-shadow: 0 0 20px #00f7ff; }
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes drift {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 20px;
+    }
+    nav ul {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    .hero h1, .challenge-hero h1 {
+        font-size: 2.5rem;
+    }
+    .products-teaser h2, .challenge-teaser h2, .challenge-details h2 {
+        font-size: 2rem;
+    }
+    .product-card, .challenge-details {
+        padding: 20px;
+    }
 }
