@@ -1,46 +1,100 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script>```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CollapseSystems</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <title>WhisperPoint | CollapseSystems</title>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    <div class="background">
-        <div class="glow"></div>
-        <canvas id="canvas"></canvas>
-        <div class="container">
-            <h1>CollapseSystems</h1>
-            <h2>Entropy-Locked Execution Engines</h2>
-            <p>We develop cryptographic systems that bind execution to the unpredictable terrain of your machine. No keys. No passwords. No backdoors.</p>
-            <div class="section">
-                <h3>CollapseZero</h3>
-                <p>An offline anti-piracy and access control engine that seals software to its origin. Fully autonomous. Fails silently. Unbreakable by design.</p>
+    <header>
+        <div class="logo">∑ WhisperPoint</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about/index.html">About</a></li>
+                <li><a href="challenge/index.html">Challenge</a></li>
+                <li><a href="products/index.html">Products</a></li>
+                <li><a href="contact/index.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h1>WhisperPoint: Where Structures Collapse</h1>
+            <p>∑ π ∞ | Enter a realm where entropy binds and secrets dissolve. Unveil the future of security.</p>
+            <a href="products/index.html" class="cta">Decode the Collapse</a>
+        </section>
+        <section class="products-teaser">
+            <h2>The Cipher Trinity</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <h3>CollapseZero</h3>
+                    <p>An offline fortress. Binds software to its origin using entropy’s chaos. No keys, no servers, no cracks. Runs only where it belongs, or fades silently.</p>
+                    <a href="products/index.html#collapsezero" class="product-cta">Explore</a>
+                </div>
+                <div class="product-card">
+                    <h3>ASDC v2.0</h3>
+                    <p>Credential-free authentication. Collapses input into a singular, unforgeable state. No passwords, no leaks, no trace. For vaults, defense, and zero-trust.</p>
+                    <a href="products/index.html#asdc" class="product-cta">Explore</a>
+                </div>
+                <div class="product-card">
+                    <h3>CollapseKey</h3>
+                    <p>A cipher veiled in shadow. Coming soon to shatter trust boundaries. Ready to unlock the unbreakable?</p>
+                    <a href="products/index.html#collapsekey" class="product-cta">Await</a>
+                </div>
             </div>
-            <div class="section">
-                <h4>Developed by <span class="lab">WhisperPoint</span></h4>
-                <p>Contact: <a href="mailto:whisperpoint@collapsesystems.com">whisperpoint@collapsesystems.com</a></p>
-            </div>
-        </div>
-    </div>
-    <script>
-        const canvas = document.getElementById("canvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        function drawChaos() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.beginPath();
-            for (let i = 0; i < 30; i++) {
-                ctx.moveTo(Math.random()*canvas.width, Math.random()*canvas.height);
-                ctx.lineTo(Math.random()*canvas.width, Math.random()*canvas.height);
-            }
-            ctx.strokeStyle = 'rgba(0,255,255,0.03)';
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-        }
-        setInterval(drawChaos, 300);
-    </script>
+        </section>
+        <section class="challenge-teaser">
+            <h2>Crack the Cipher</h2>
+            <p>Think you can unravel the Collapse? Download the challenge and face the entropy. Only the worthy will prevail.</p>
+            <a href="challenge/encrypted_challenge.zip" class="cta">Accept the Challenge</a>
+        </section>
+    </main>
+    <footer>
+        <p>∑ WhisperPoint 2025 | <a href="challenge/index.html">Crack the Code</a> | <a href="contact/index.html">Initiate Protocol</a></p>
+        <div class="crypto-bg">010101 ∑ π ∞ 010101</div>
+    </footer>
 </body>
 </html>
+```

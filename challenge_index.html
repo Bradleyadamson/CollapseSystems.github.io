@@ -1,0 +1,80 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script>```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhisperPoint | Cipher Challenge</title>
+    <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">∑ WhisperPoint</div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about/index.html">About</a></li>
+                <li><a href="index.html">Challenge</a></li>
+                <li><a href="../products/index.html">Products</a></li>
+                <li><a href="../contact/index.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="challenge-hero">
+            <h1>Crack the Collapse</h1>
+            <p>∑ π ∞ | The cipher awaits. Download the encrypted challenge and unravel the entropy. Only the elite can break the Collapse.</p>
+            <a href="encrypted_challenge.zip" download class="cta">Download the Cipher</a>
+        </section>
+        <section class="challenge-details">
+            <h2>The Enigma</h2>
+            <p>Within <code>encrypted_challenge.zip</code> lies a locked secret. Forged in chaos, bound by math. Crack the hash, decode the truth. No hints, no mercy—only the Collapse.</p>
+            <p>Post your proof to <a href="../contact/index.html">initiate protocol</a>. The worthy will be recognized.</p>
+        </section>
+    </main>
+    <footer>
+        <p>∑ WhisperPoint 2025 | <a href="index.html">Crack the Code</a> | <a href="../contact/index.html">Initiate Protocol</a></p>
+        <div class="crypto-bg">010101 ∑ π ∞ 010101</div>
+    </footer>
+</body>
+</html>
+```
